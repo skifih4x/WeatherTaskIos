@@ -8,7 +8,7 @@
 struct CurrentWeatherModel: Codable {
     let name: String
     let weather: [CurrentWeather]
-    let main: [MainWeather]
+    let main: MainWeather
 }
 
 struct CurrentWeather: Codable {
