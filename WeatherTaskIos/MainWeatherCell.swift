@@ -23,6 +23,7 @@ class MainWeatherCell: UITableViewCell {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 25)
+        label.backgroundColor = .black
         label.textColor = .white
         return label
     }()
@@ -33,7 +34,6 @@ class MainWeatherCell: UITableViewCell {
         imageView.backgroundColor = .black
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
-
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -42,15 +42,14 @@ class MainWeatherCell: UITableViewCell {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 25)
-//        label.textAlignment = .right
+        label.backgroundColor = .black
         label.textColor = .white
         return label
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-
+        backgroundColor = .black
     }
 
     override func layoutSubviews() {

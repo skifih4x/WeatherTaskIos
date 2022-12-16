@@ -15,6 +15,7 @@
 		00A94B28294B31F8000A8169 /* MainWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A94B27294B31F8000A8169 /* MainWeatherCell.swift */; };
 		00A94B2B294B32D0000A8169 /* CurrentWeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A94B2A294B32D0000A8169 /* CurrentWeatherModel.swift */; };
 		00A94B2E294B6E12000A8169 /* NetworkWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A94B2D294B6E12000A8169 /* NetworkWeather.swift */; };
+		00F8A83B294C94E0007DAC74 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F8A83A294C94E0007DAC74 /* HeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		00A94B27294B31F8000A8169 /* MainWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWeatherCell.swift; sourceTree = "<group>"; };
 		00A94B2A294B32D0000A8169 /* CurrentWeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherModel.swift; sourceTree = "<group>"; };
 		00A94B2D294B6E12000A8169 /* NetworkWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWeather.swift; sourceTree = "<group>"; };
+		00F8A83A294C94E0007DAC74 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				00A94B23294A0066000A8169 /* App */,
 				00A94B25294A6260000A8169 /* MainViewController.swift */,
 				00A94B27294B31F8000A8169 /* MainWeatherCell.swift */,
+				00F8A83A294C94E0007DAC74 /* HeaderView.swift */,
 			);
 			path = WeatherTaskIos;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				00A94B2E294B6E12000A8169 /* NetworkWeather.swift in Sources */,
 				00A94B26294A6260000A8169 /* MainViewController.swift in Sources */,
 				00A94B122949FA83000A8169 /* SceneDelegate.swift in Sources */,
+				00F8A83B294C94E0007DAC74 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
