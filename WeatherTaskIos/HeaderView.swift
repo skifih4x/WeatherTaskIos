@@ -11,18 +11,9 @@ class HeaderView: UITableViewHeaderFooterView, UISearchControllerDelegate, UISea
 
     static let identifier = "HeaderView"
 
-    private lazy var labelText: UILabel = {
-        var label = UILabel()
-        label.text = "Weather"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: 34)
-        label.backgroundColor = .black
-        label.textColor = .white
-        return label
-    }()
-
      lazy var searchBarWeather: UISearchController = {
         let search = UISearchController(searchResultsController: nil)
+         search.searchBar.translatesAutoresizingMaskIntoConstraints = false
         search.obscuresBackgroundDuringPresentation = true
         search.searchBar.barTintColor = .black
         search.searchBar.searchTextField.leftView?.tintColor = .lightGray
@@ -31,21 +22,24 @@ class HeaderView: UITableViewHeaderFooterView, UISearchControllerDelegate, UISea
         search.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         search.searchBar.searchTextField.backgroundColor = .systemFill
         search.searchBar.delegate = self
-//         search.searchBar.sizeToFit()
+         search.searchBar.sizeToFit()
         return search
     }()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(labelText)
         contentView.addSubview(searchBarWeather.searchBar)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        labelText.bottomAnchor.constraint(equalTo: searchBarWeather.searchBar.topAnchor).isActive = true
 
-        searchBarWeather.searchBar.frame = CGRect(x: 0, y: 94, width: searchBarWeather.searchBar.frame.width, height: searchBarWeather.searchBar.frame.height)
+        NSLayoutConstraint.activate([
+            searchBarWeather.searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            searchBarWeather.searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            searchBarWeather.searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+        ])
+
     }
 
     required init?(coder: NSCoder) {

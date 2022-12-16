@@ -9,7 +9,7 @@ import UIKit
 
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
-    let sectionTitle = ["Weather"]
+    let sectionTitle = [""]
 
    private var model: CurrentWeatherModel?
 
@@ -17,35 +17,31 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(MainWeatherCell.self, forCellReuseIdentifier: MainWeatherCell.identifier)
         tableView.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderView.identifier)
-        tableView.backgroundColor = .black
         tableView.allowsSelectionDuringEditing = false
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
 
-    lazy var searchBarWeather: UISearchController = {
-       let search = UISearchController(searchResultsController: nil)
-       search.searchBar.translatesAutoresizingMaskIntoConstraints = false
-       search.obscuresBackgroundDuringPresentation = true
-       search.searchBar.barTintColor = .black
-       search.searchBar.searchTextField.leftView?.tintColor = .lightGray
-       search.searchBar.showsCancelButton = false
-       search.searchBar.searchTextField.textColor = .white
-       search.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-       search.searchBar.searchTextField.backgroundColor = .systemFill
-       search.searchBar.delegate = self
-        search.searchBar.sizeToFit()
-       return search
-   }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
         view.addSubview(mainTableView)
 
-        mainTableView.dataSource = self
-        mainTableView.delegate = self
+        title = "Weather"
         mainTableView.backgroundColor = .black
+
+
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.backgroundColor = .black
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationItem.largeTitleDisplayMode = .automatic
 
         NetworkWeather.shared.fetchCurrentWeather(urlString: "https://api.openweathermap.org/data/2.5/weather?q=bobruisk&units=metric&appid=22dc65ed9ccb1fee97feb45f8a252e82") { result in
             switch result {
@@ -67,7 +63,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         model?.weather.count ?? 1
+//         model?.weather.count ?? 1
+         3
     }
 
 
@@ -79,16 +76,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("1")
         tableView.deselectRow(at: indexPath, animated: false)
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderView.identifier)
+        
         return header
     }
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        150
+        50
     }
 }
 

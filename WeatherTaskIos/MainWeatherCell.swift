@@ -13,9 +13,9 @@ class MainWeatherCell: UITableViewCell {
 
     private let stackView: UIStackView = {
         let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.contentMode = .scaleToFill
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.contentMode = .scaleAspectFill
         return stack
     }()
 
@@ -31,10 +31,10 @@ class MainWeatherCell: UITableViewCell {
     private lazy var imageWeather: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(systemName: "heart.fill")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .black
         imageView.image = image
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
 
@@ -43,12 +43,14 @@ class MainWeatherCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 25)
         label.backgroundColor = .black
+        label.textAlignment = .right
         label.textColor = .white
         return label
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = .black
         backgroundColor = .black
     }
 
@@ -59,15 +61,18 @@ class MainWeatherCell: UITableViewCell {
         stackView.addArrangedSubview(imageWeather)
         stackView.addArrangedSubview(tempLabel)
 
-
-
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 
-            countryLabel.widthAnchor.constraint(equalToConstant: 130),
+
+            countryLabel.widthAnchor.constraint(equalToConstant: 170),
+
+            imageWeather.widthAnchor.constraint(equalToConstant: 42),
+            imageWeather.heightAnchor.constraint(equalToConstant: 42)
+
         ])
 
     }
