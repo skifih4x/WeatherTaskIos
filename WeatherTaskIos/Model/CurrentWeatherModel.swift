@@ -6,6 +6,7 @@
 //
 
 struct CurrentWeatherModel: Codable {
+    let id: Int
     let name: String
     let weather: [CurrentWeather]
     let main: MainWeather

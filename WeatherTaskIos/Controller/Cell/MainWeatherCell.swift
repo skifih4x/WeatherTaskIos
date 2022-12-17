@@ -34,7 +34,7 @@ class MainWeatherCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .black
         imageView.image = image
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .center
         return imageView
     }()
 
@@ -70,8 +70,8 @@ class MainWeatherCell: UITableViewCell {
 
             countryLabel.widthAnchor.constraint(equalToConstant: 170),
 
-            imageWeather.widthAnchor.constraint(equalToConstant: 42),
-            imageWeather.heightAnchor.constraint(equalToConstant: 42)
+//            imageWeather.widthAnchor.constraint(equalToConstant: 42),
+//            imageWeather.heightAnchor.constraint(equalToConstant: 42)
 
         ])
 

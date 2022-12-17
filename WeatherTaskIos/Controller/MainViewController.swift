@@ -11,6 +11,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     let sectionTitle = [""]
 
+    let city = ["Warsaw","Bucharest","Martuni","Shah Alam","Karmie","Budapest","Munich","Netivot","Santa Cruz de la Sierra","Porto Alegre","Kfar Yona","Palermo","Bremen","Jermuk","Beit Shemesh","Florence","Utrecht","Buenos Aires","Guayaquil","Rosario","Soledad","Subang Jaya","Valencia","Pasir Gudang","Akhtala"]
+
    private var model: CurrentWeatherModel?
 
     private lazy var mainTableView: UITableView = {
@@ -43,15 +45,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .automatic
 
-        NetworkWeather.shared.fetchCurrentWeather(urlString: "https://api.openweathermap.org/data/2.5/weather?q=bobruisk&units=metric&appid=22dc65ed9ccb1fee97feb45f8a252e82") { result in
-            switch result {
-            case .success(let success):
-                self.model = success
-                self.mainTableView.reloadData()
-            case .failure(let failure):
-                print(failure.localizedDescription)
+
+            NetworkWeather.shared.fetchCurrentWeather(urlString: "https://api.openweathermap.org/data/2.5/weather?q=warsaw&units=metric&appid=22dc65ed9ccb1fee97feb45f8a252e82") { result in
+                switch result {
+                case .success(let success):
+                    self.model = success
+                    self.mainTableView.reloadData()
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+                }
             }
-        }
+        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -64,7 +68,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //         model?.weather.count ?? 1
-         3
+         1
     }
 
 
@@ -75,18 +79,21 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-    }
-
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderView.identifier)
-        
         return header
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         50
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+
+        let vc = DetailWeatherViewController()
+        vc.modelVC = model
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
