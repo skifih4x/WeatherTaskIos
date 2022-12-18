@@ -9,60 +9,60 @@ import UIKit
 
 class DetailWeatherViewController: UIViewController {
 
-   var modelVC: CurrentWeatherModel?
+    var modelVC: CurrentWeatherModel?
 
-    lazy private var tempLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 96)
-        label.text = "7"
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    lazy private var detailViewMain: DetailViewMainWeather = {
+        let view = DetailViewMainWeather()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.layer.backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1).cgColor
-        view.addSubview(tempLabel)
+//        view.addSubview(tempLabel)
+        view.addSubview(detailViewMain)
 
-        tempLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        tempLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        self.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: (self.navigationController?.navigationBar.frame.size.width)!, height: 116)
+        detailViewMain.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        detailViewMain.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        setNavigationController()
+    }
 
+    private func setNavigationController() {
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1)
+        navBarAppearance.shadowColor = .clear
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        navigationController?.navigationBar.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: navigationController?.navigationBar.frame.size.width ?? 0,
+            height: 116
+        )
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .automatic
-        navBarAppearance.shadowColor = .clear
-        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.hidesBarsOnTap = false
+        navigationItem.hidesSearchBarWhenScrolling = false
 
         let button = UIButton(type: .custom)
-
-        button.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
-        button.imageView?.tintColor = .black
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.imageView?.tintColor = .white
         button.addTarget(self, action: #selector(callMethod), for: .touchUpInside)
-        button.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         button.sizeToFit()
-
 
         let barButton = UIBarButtonItem(customView: button)
         navigationItem.leftBarButtonItem = barButton
-
-        navigationController?.navigationBar.barTintColor = .white
-
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.hidesBarsOnTap = false
-        navigationItem.hidesSearchBarWhenScrolling = false
     }
-
     @objc func callMethod(sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated:true)
+        navigationController?.popViewController(animated:true)
     }
 }
 
