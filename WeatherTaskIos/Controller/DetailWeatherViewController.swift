@@ -13,6 +13,7 @@ class DetailWeatherViewController: UIViewController {
 
     lazy private var detailViewMain: DetailViewMainWeather = {
         let view = DetailViewMainWeather()
+        view.contentMode = .scaleToFill
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -20,11 +21,14 @@ class DetailWeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.layer.backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1).cgColor
-//        view.addSubview(tempLabel)
         view.addSubview(detailViewMain)
 
-        detailViewMain.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        detailViewMain.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            detailViewMain.topAnchor.constraint(equalTo: view.topAnchor, constant: 220),
+            detailViewMain.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            detailViewMain.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        ])
+
         setNavigationController()
     }
 
@@ -71,7 +75,7 @@ import SwiftUI
 struct PeopleVCProviderDetail: PreviewProvider {
     static var previews: some View {
         Container().edgesIgnoringSafeArea(.all)
-            .previewDevice("iPhone 13 Pro Max")
+            .previewDevice("iPhone 14 Pro Max")
     }
 
     struct Container: UIViewControllerRepresentable {
