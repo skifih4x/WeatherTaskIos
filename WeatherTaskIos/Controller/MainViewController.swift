@@ -57,6 +57,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         
     }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         mainTableView.frame = view.bounds
@@ -118,3 +119,9 @@ struct PeopleVCProvider: PreviewProvider {
         }
     }
 }
+
+//extension UINavigationBar {
+//    open override func sizeThatFits(_ size: CGSize) -> CGSize {
+//        return CGSize(width: UIScreen.main.bounds.width, height: 51)
+//    }
+//}
