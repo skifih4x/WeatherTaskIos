@@ -20,6 +20,8 @@ class DetailWeatherViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let model = modelVC else { return }
+        detailViewMain.configure(model: model)
         view.layer.backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1).cgColor
         view.addSubview(detailViewMain)
 

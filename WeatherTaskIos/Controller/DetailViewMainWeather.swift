@@ -99,10 +99,10 @@ class DetailViewMainWeather: UIView {
         mainStackView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 
-    private func setupConstraints() {
-
+    func configure(model: CurrentWeatherModel) {
+        cityLabel.text = model.name
+        temperatureLabel.text = "\(model.main.temp)°C"
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
