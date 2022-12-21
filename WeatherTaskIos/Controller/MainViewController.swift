@@ -9,11 +9,7 @@ import UIKit
 
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
-    let sectionTitle = [""]
-
-    let city = ["Warsaw","Bucharest","Martuni","Shah Alam","Karmie","Budapest","Munich","Netivot","Santa Cruz de la Sierra","Porto Alegre","Kfar Yona","Palermo","Bremen","Jermuk","Beit Shemesh","Florence","Utrecht","Buenos Aires","Guayaquil","Rosario","Soledad","Subang Jaya","Valencia","Pasir Gudang","Akhtala"]
-
-   private var model: CurrentWeatherModel?
+    private var model: CurrentWeatherModel?
 
     private lazy var mainTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -30,32 +26,31 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(mainTableView)
-
-        title = "Weather"
         mainTableView.backgroundColor = .black
+        title = "Wather"
+        NetworkWeather.shared.fetchCurrentWeather(urlString: "https://api.openweathermap.org/data/2.5/weather?q=minsk&units=metric&appid=22dc65ed9ccb1fee97feb45f8a252e82") { result in
+            switch result {
+            case .success(let success):
+                self.model = success
+                self.mainTableView.reloadData()
+            case .failure(let failure):
+                print(failure.localizedDescription)
 
+            }
+        }
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        navBarAppearance.backgroundColor = .black
+        navBarAppearance.backgroundColor = .none
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .automatic
-
-
-            NetworkWeather.shared.fetchCurrentWeather(urlString: "https://api.openweathermap.org/data/2.5/weather?q=minsk&units=metric&appid=22dc65ed9ccb1fee97feb45f8a252e82") { result in
-                switch result {
-                case .success(let success):
-                    self.model = success
-                    self.mainTableView.reloadData()
-                case .failure(let failure):
-                    print(failure.localizedDescription)
-                }
-            }
-        
     }
 
     override func viewDidLayoutSubviews() {
@@ -63,20 +58,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         mainTableView.frame = view.bounds
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        sectionTitle.count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
     }
-
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//         model?.weather.count ?? 1
-         1
-    }
-
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainWeatherCell.identifier, for: indexPath) as? MainWeatherCell else { return UITableViewCell() }
-         guard let models = model else { return UITableViewCell() }
-         cell.configure(model: models)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainWeatherCell.identifier, for: indexPath) as? MainWeatherCell else { return UITableViewCell() }
+        guard let models = model else { return UITableViewCell() }
+        cell.configure(model: models)
         return cell
     }
 
@@ -119,9 +108,3 @@ struct PeopleVCProvider: PreviewProvider {
         }
     }
 }
-
-//extension UINavigationBar {
-//    open override func sizeThatFits(_ size: CGSize) -> CGSize {
-//        return CGSize(width: UIScreen.main.bounds.width, height: 51)
-//    }
-//}

@@ -19,15 +19,6 @@ class DetailWeatherViewController: UIViewController {
         return view
     }()
     var collectionView: UICollectionView!
-//    lazy var collectionView: UICollectionView = {
-//        var colection = UICollectionView()
-//        colection = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
-//        colection.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        colection.register(HoursWeatherCell.self, forCellWithReuseIdentifier: HoursWeatherCell.reuseId)
-//        colection.register(WeekWeatherCell.self, forCellWithReuseIdentifier: WeekWeatherCell.reuseId)
-//        colection.translatesAutoresizingMaskIntoConstraints = false
-//        return colection
-//    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,12 +63,6 @@ class DetailWeatherViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-        navigationController?.navigationBar.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: navigationController?.navigationBar.frame.size.width ?? 0,
-            height: 116
-        )
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .automatic
         navigationController?.navigationBar.barTintColor = .white
@@ -185,6 +170,28 @@ extension DetailWeatherViewController: UICollectionViewDelegate, UICollectionVie
             cell.configure(with: items)
             return cell
         }
+    }
+}
+
+extension UIView {
+
+    enum ViewSide {
+        case Left, Right, Top, Bottom
+    }
+
+    func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
+
+        let border = CALayer()
+        border.backgroundColor = color
+
+        switch side {
+        case .Left: border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height); break
+        case .Right: border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height); break
+        case .Top: border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness); break
+        case .Bottom: border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness); break
+        }
+
+        layer.addSublayer(border)
     }
 }
 

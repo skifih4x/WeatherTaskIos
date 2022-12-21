@@ -83,10 +83,11 @@ class DetailViewMainWeather: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemBackground
+
         addSubview(mainStackView)
         addSubview(cityTempWeatherStackView)
         addSubview(minAndMaxStackView)
+
         cityTempWeatherStackView.addArrangedSubview(cityLabel)
         cityTempWeatherStackView.addArrangedSubview(temperatureLabel)
         cityTempWeatherStackView.addArrangedSubview(weatherLabel)
