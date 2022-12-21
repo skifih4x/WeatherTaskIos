@@ -46,7 +46,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.navigationItem.largeTitleDisplayMode = .automatic
 
 
-            NetworkWeather.shared.fetchCurrentWeather(urlString: "https://api.openweathermap.org/data/2.5/weather?q=warsaw&units=metric&appid=22dc65ed9ccb1fee97feb45f8a252e82") { result in
+            NetworkWeather.shared.fetchCurrentWeather(urlString: "https://api.openweathermap.org/data/2.5/weather?q=minsk&units=metric&appid=22dc65ed9ccb1fee97feb45f8a252e82") { result in
                 switch result {
                 case .success(let success):
                     self.model = success

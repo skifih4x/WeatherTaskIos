@@ -46,7 +46,7 @@ class DetailViewMainWeather: UIView {
 
     lazy private var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 96)
+        label.font = UIFont.systemFont(ofSize: 80)
         label.text = "7°C"
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -101,7 +101,7 @@ class DetailViewMainWeather: UIView {
 
     func configure(model: CurrentWeatherModel) {
         cityLabel.text = model.name
-        temperatureLabel.text = "\(model.main.temp)°C"
+        temperatureLabel.text = "\(model.main.temp)°"
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
