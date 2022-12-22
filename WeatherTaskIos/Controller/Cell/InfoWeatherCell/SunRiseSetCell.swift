@@ -27,6 +27,11 @@ class SunRiseSetCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setLayout()
+        setConstaint()
+    }
+
+    private func setLayout() {
         backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1)
         addSubview(riseSetStackView)
         addSubview(sunriseStackView)
@@ -40,7 +45,9 @@ class SunRiseSetCell: UITableViewCell {
         sunriseStackView.addArrangedSubview(sunriseLabel)
         sunsetStackView.addArrangedSubview(sunsetTextLabel)
         sunsetStackView.addArrangedSubview(sunsetLabel)
+    }
 
+    private func setConstaint() {
         NSLayoutConstraint.activate([
             riseSetStackView.topAnchor.constraint(equalTo: topAnchor),
             riseSetStackView.bottomAnchor.constraint(equalTo: bottomAnchor),

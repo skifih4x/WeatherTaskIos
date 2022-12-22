@@ -23,7 +23,6 @@ extension UILabel {
         textColor = .white
     }
 
-
     convenience init(textMaxSize: String) {
         self.init()
         self.text = text

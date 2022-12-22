@@ -28,6 +28,10 @@ class FeelTempPressurCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setLayout()
+        setConstraint()
+    }
+    private func setLayout() {
         backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1)
         addSubview(feelPresSetStackView)
         addSubview(feelsLikeStackView)
@@ -41,7 +45,9 @@ class FeelTempPressurCell: UITableViewCell {
         feelsLikeStackView.addArrangedSubview(feelsLikeLabel)
         pressureStackView.addArrangedSubview(pressureTextLabel)
         pressureStackView.addArrangedSubview(pressureLabel)
+    }
 
+    private func setConstraint() {
         NSLayoutConstraint.activate([
             feelPresSetStackView.topAnchor.constraint(equalTo: topAnchor),
             feelPresSetStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
