@@ -7,72 +7,24 @@
 
 import UIKit
 
+
 class FeelTempPressurCell: UITableViewCell {
 
     static let identifier = "FeelTempPressurCell"
 
-    lazy var feelPresSetStackView: UIStackView = { //Добавляю feelsLike и pressure
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .fillEqually
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    lazy var feelPresSetStackView = UIStackView(.horizontal, .center, .fillEqually)
 
-    lazy var feelsLikeStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    lazy var feelsLikeStackView = UIStackView(.vertical, .center, .fillProportionally)
 
-    lazy var feelsLikeTextLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 13)
-        label.text = "FEEL LIKE"
-        label.textColor = .white
-        return label
-    }()
+    lazy var feelsLikeTextLabel = UILabel("FEEL LIKE", .boldSystemFont(ofSize: 13))
 
-    lazy var feelsLikeLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: 28)
-        label.textColor = .white
-        label.text = "3o"
-        return label
-    }()
+    lazy var feelsLikeLabel = UILabel("0.00", .systemFont(ofSize: 28))
 
-    lazy var pressureStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    lazy var pressureStackView = UIStackView(.vertical, .center, .fillProportionally)
 
-    lazy var pressureTextLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 13)
-        label.textColor = .white
-        label.text = "PRESSURE"
-        return label
-    }()
+    lazy var pressureTextLabel = UILabel("PRESSURE", .systemFont(ofSize: 13))
 
-    lazy var pressureLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: 28)
-        label.textColor = .white
-        label.text = "1025 hPa"
-        return label
-    }()
+    lazy var pressureLabel = UILabel("1000", .boldSystemFont(ofSize: 28))
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -80,6 +32,9 @@ class FeelTempPressurCell: UITableViewCell {
         addSubview(feelPresSetStackView)
         addSubview(feelsLikeStackView)
         addSubview(pressureStackView)
+        feelPresSetStackView.translatesAutoresizingMaskIntoConstraints = false
+        feelsLikeStackView.translatesAutoresizingMaskIntoConstraints = false
+        pressureStackView.translatesAutoresizingMaskIntoConstraints = false
         feelPresSetStackView.addArrangedSubview(feelsLikeStackView)
         feelPresSetStackView.addArrangedSubview(pressureStackView)
         feelsLikeStackView.addArrangedSubview(feelsLikeTextLabel)
@@ -95,11 +50,11 @@ class FeelTempPressurCell: UITableViewCell {
         ])
     }
 
-    func configure(model: SunRiseSet) {
-        feelsLikeTextLabel.text = "SUNRASE"
-        feelsLikeLabel.text = "\(model.sunrise)"
-        pressureTextLabel.text = "SUNSET"
-        pressureLabel.text = "\(model.sunset)°"
+    func configure(model: CurrentWeatherModel) {
+        feelsLikeTextLabel.text = "FEEL LIKE"
+        feelsLikeLabel.text = "\(model.main.feels_like)"
+        pressureTextLabel.text = "PRESSURE"
+        pressureLabel.text = "\(model.main.pressure)°"
     }
 
     required init?(coder: NSCoder) {

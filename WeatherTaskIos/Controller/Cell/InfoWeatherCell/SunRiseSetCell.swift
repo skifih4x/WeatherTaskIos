@@ -11,68 +11,19 @@ class SunRiseSetCell: UITableViewCell {
 
     static let identifier = "SunRiseSetCell"
 
-    private lazy var riseSetStackView: UIStackView = { //Добавляю sunrise и sunset
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .fillEqually
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    private lazy var riseSetStackView = UIStackView(.horizontal, .center, .fillEqually)
 
-    private lazy var sunriseStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    private lazy var sunriseStackView = UIStackView(.vertical, .center, .fillProportionally)
 
-    private lazy var sunriseTextLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 13)
-        label.text = "SUNRASE"
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private lazy var sunriseTextLabel = UILabel("SUNRASE", .systemFont(ofSize: 13))
 
-    private lazy var sunriseLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 28)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "7.05"
-        label.textColor = .white
-        return label
-    }()
+    private lazy var sunriseLabel = UILabel("7.00am", .boldSystemFont(ofSize: 28))
 
-    private lazy var sunsetStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    private lazy var sunsetStackView = UIStackView(.vertical, .center, .fillProportionally)
 
-    private lazy var sunsetTextLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 13)
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "SUNSET"
-        return label
-    }()
+    private lazy var sunsetTextLabel = UILabel("SUNSET", .systemFont(ofSize: 13))
 
-    private lazy var sunsetLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 28)
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "10.0"
-        return label
-    }()
+    private lazy var sunsetLabel = UILabel("7.00pm", .boldSystemFont(ofSize: 28))
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -80,6 +31,9 @@ class SunRiseSetCell: UITableViewCell {
         addSubview(riseSetStackView)
         addSubview(sunriseStackView)
         addSubview(sunsetStackView)
+        riseSetStackView.translatesAutoresizingMaskIntoConstraints = false
+        sunriseStackView.translatesAutoresizingMaskIntoConstraints = false
+        sunsetStackView.translatesAutoresizingMaskIntoConstraints = false
         riseSetStackView.addArrangedSubview(sunriseStackView)
         riseSetStackView.addArrangedSubview(sunsetStackView)
         sunriseStackView.addArrangedSubview(sunriseTextLabel)
@@ -95,11 +49,11 @@ class SunRiseSetCell: UITableViewCell {
         ])
     }
 
-    func configure(model: SunRiseSet) {
+    func configure(model: CurrentWeatherModel) {
         sunriseTextLabel.text = "SUNRASE"
-        sunriseLabel.text = "\(model.sunrise)"
+        sunriseLabel.text = "\(model.sys.sunrise)"
         sunsetTextLabel.text = "SUNSET"
-        sunsetLabel.text = "\(model.sunset)°"
+        sunsetLabel.text = "\(model.sys.sunset)"
     }
 
     required init?(coder: NSCoder) {

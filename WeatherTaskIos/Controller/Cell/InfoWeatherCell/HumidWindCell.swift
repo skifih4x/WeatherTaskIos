@@ -11,68 +11,19 @@ class HumidWindCell: UITableViewCell {
 
     static let identifier = "HumidWindCell"
 
-    lazy var humWindSetStackView: UIStackView = { //Добавляю humidity и wind
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .fillEqually
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    lazy var humWindSetStackView = UIStackView(.horizontal, .center, .fillEqually)
 
-    lazy var humidityStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    lazy var humidityStackView = UIStackView(.vertical, .center, .fillProportionally)
 
-    lazy var humidityTextLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 13)
-        label.textColor = .white
-        label.text = "HUMIDITY"
-        return label
-    }()
+    lazy var humidityTextLabel = UILabel("HUMIDITY", .systemFont(ofSize: 13))
 
-    lazy var humidityLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: 28)
-        label.textColor = .white
-        label.text = "58%"
-        return label
-    }()
+    lazy var humidityLabel = UILabel("100", .boldSystemFont(ofSize: 28))
 
-    lazy var windStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        return stack
-    }()
+    lazy var windStackView = UIStackView(.vertical, .center, .fillProportionally)
 
-    lazy var windTextLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 13)
-        label.textColor = .white
-        label.text = "WIND"
-        return label
-    }()
+    lazy var windTextLabel = UILabel("WIND", .systemFont(ofSize: 13))
 
-    lazy var windLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: 28)
-        label.textColor = .white
-        label.text = "s 3 km/hr"
-        return label
-    }()
+    lazy var windLabel = UILabel("3ms", .boldSystemFont(ofSize: 28))
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -80,6 +31,9 @@ class HumidWindCell: UITableViewCell {
         addSubview(humWindSetStackView)
         addSubview(humidityStackView)
         addSubview(windStackView)
+        humWindSetStackView.translatesAutoresizingMaskIntoConstraints = false
+        humidityStackView.translatesAutoresizingMaskIntoConstraints = false
+        windStackView.translatesAutoresizingMaskIntoConstraints = false
         humWindSetStackView.addArrangedSubview(humidityStackView)
         humWindSetStackView.addArrangedSubview(windStackView)
         humidityStackView.addArrangedSubview(humidityTextLabel)
@@ -95,11 +49,11 @@ class HumidWindCell: UITableViewCell {
         ])
     }
 
-    func configure(model: SunRiseSet) {
-        humidityTextLabel.text = "SUNRASE"
-        humidityLabel.text = "\(model.sunrise)"
-        windTextLabel.text = "SUNSET"
-        windLabel.text = "\(model.sunset)°"
+    func configure(model: CurrentWeatherModel) {
+        humidityTextLabel.text = "HUMIDITY"
+        humidityLabel.text = "\(model.main.humidity)"
+        windTextLabel.text = "WIND"
+        windLabel.text = "\(model.wind.speed)"
     }
 
     required init?(coder: NSCoder) {

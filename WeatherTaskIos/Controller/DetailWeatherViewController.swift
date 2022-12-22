@@ -12,30 +12,46 @@ class DetailWeatherViewController: UIViewController, UITableViewDelegate, UITabl
     var modelVC: CurrentWeatherModel?
     var forecastModel: ForecastWeatherModel?
 
-    lazy private var detailViewMain: DetailViewMainWeather = {
-        let view = DetailViewMainWeather()
+    lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height)
+
+    private lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView(frame: .zero)
+        scroll.frame = view.bounds
+        scroll.contentSize = contentViewSize
+        return scroll
+    }()
+
+    private lazy var detailViewMain: DetailViewMainWeather = {
+        let view = DetailViewMainWeather(frame: .zero)
         view.contentMode = .scaleToFill
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-//    lazy private var infoViewWeather: InfoWeatherView = {
-//        let view = InfoWeatherView()
-//        view.contentMode = .scaleToFill
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-    var collectionView: UICollectionView!
+    private lazy var collectionView: UICollectionView = {
+        let collection = UICollectionView(frame: CGRect(x: 0, y: 230, width: view.frame.width, height: 500), collectionViewLayout: createCompositionalLayout())
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collection.backgroundColor = .none
+        collection.register(HoursWeatherCell.self, forCellWithReuseIdentifier: HoursWeatherCell.reuseId)
+        collection.register(WeekWeatherCell.self, forCellWithReuseIdentifier: WeekWeatherCell.reuseId)
+        collection.isScrollEnabled = false
+        collection.delegate = self
+        collection.dataSource = self
+        return collection
+    }()
 
     private lazy var mainTableView: UITableView = {
-        let tableView = UITableView(frame: .init(x: 0, y: 300, width: view.frame.width, height: 390), style: .grouped)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 620, width: view.frame.width, height: 500), style: .grouped)
         tableView.register(SunRiseSetCell.self, forCellReuseIdentifier: SunRiseSetCell.identifier)
         tableView.register(HumidWindCell.self, forCellReuseIdentifier: HumidWindCell.identifier)
         tableView.register(FeelTempPressurCell.self, forCellReuseIdentifier: FeelTempPressurCell.identifier)
         tableView.allowsSelectionDuringEditing = false
         tableView.backgroundColor = .none
         tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
         tableView.delegate = self
+        tableView.rowHeight = 70
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -43,10 +59,9 @@ class DetailWeatherViewController: UIViewController, UITableViewDelegate, UITabl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setCollectionView()
-        setLayout()
+//        setLayout()
         setNavigationController()
-
+        setLayout()
         guard let modelCurrent = modelVC else { return }
         detailViewMain.configure(model: modelCurrent)
 
@@ -59,32 +74,30 @@ class DetailWeatherViewController: UIViewController, UITableViewDelegate, UITabl
                 print(failure)
             }
         }
-
     }
 
     private func setLayout() {
         view.layer.backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1).cgColor
-        view.addSubview(detailViewMain)
-        view.addSubview(collectionView)
-        view.addSubview(mainTableView)
+//        view.addSubview(detailViewMain)
+//        view.addSubview(collectionView)
+//        view.addSubview(mainTableView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(detailViewMain)
+        scrollView.addSubview(collectionView)
+        scrollView.addSubview(mainTableView)
+
 
         NSLayoutConstraint.activate([
-            detailViewMain.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+
+            detailViewMain.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 90),
             detailViewMain.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             detailViewMain.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+
+//            mainTableView.topAnchor.constraint(equalTo: detailViewMain.topAnchor),
+//            mainTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            mainTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
-
-    private func setCollectionView() {
-        collectionView = UICollectionView(frame: .init(x: 0, y: 300, width: view.frame.width, height: 390), collectionViewLayout: createCompositionalLayout())
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .none
-        collectionView.register(HoursWeatherCell.self, forCellWithReuseIdentifier: HoursWeatherCell.reuseId)
-        collectionView.register(WeekWeatherCell.self, forCellWithReuseIdentifier: WeekWeatherCell.reuseId)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    }
-
 
     private func setNavigationController() {
         let navBarAppearance = UINavigationBarAppearance()
@@ -121,24 +134,25 @@ class DetailWeatherViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        guard let model = modelVC else { return UITableViewCell() }
         switch indexPath.row {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SunRiseSetCell.identifier, for: indexPath) as? SunRiseSetCell else { return UITableViewCell() }
+            cell.configure(model: model)
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: HumidWindCell.identifier, for: indexPath) as? HumidWindCell else { return UITableViewCell() }
+            cell.configure(model: model)
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: FeelTempPressurCell.identifier, for: indexPath) as? FeelTempPressurCell else { return UITableViewCell() }
+            cell.configure(model: model)
             return cell
-
         }
-
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        80
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 
     // MARK: - Setup Layout
@@ -149,17 +163,15 @@ class DetailWeatherViewController: UIViewController, UITableViewDelegate, UITabl
             var section: NSCollectionLayoutSection?
 
             switch sectionIndex {
-            case 0:  section = self.createWaitingChatSection()
-            default: section = self.createActiveChatSection()
+            case 0:  section = self.createHourseSection()
+            default: section = self.createWeeksSection()
             }
-
             return section
         }
-
         return layout
     }
 
-    func createWaitingChatSection() -> NSCollectionLayoutSection {
+    func createHourseSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
                                               heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -173,15 +185,15 @@ class DetailWeatherViewController: UIViewController, UITableViewDelegate, UITabl
 
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = .continuous
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 66, leading: 12, bottom: 0, trailing: 12)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 12, bottom: 0, trailing: 12)
 
         return layoutSection
     }
 
-    func createActiveChatSection() -> NSCollectionLayoutSection {
+    func createWeeksSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(50))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 8, trailing: 0)
+        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0)
 
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                heightDimension: .estimated(1))
@@ -189,6 +201,7 @@ class DetailWeatherViewController: UIViewController, UITableViewDelegate, UITabl
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets.init(top: 20, leading: 20, bottom: 0, trailing: 20)
+        section.interGroupSpacing = -10
         return section
     }
 }

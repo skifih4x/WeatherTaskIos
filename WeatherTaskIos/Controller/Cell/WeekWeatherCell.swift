@@ -102,8 +102,8 @@ extension WeekWeatherCell {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            iconImageView.heightAnchor.constraint(equalToConstant: 70),
-            iconImageView.widthAnchor.constraint(equalToConstant: 70),
+            iconImageView.heightAnchor.constraint(equalToConstant: 50),
+            iconImageView.widthAnchor.constraint(equalToConstant: 50),
 
             dayWeekLabel.widthAnchor.constraint(equalToConstant: 130),
 

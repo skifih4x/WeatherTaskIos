@@ -83,7 +83,6 @@ class DetailViewMainWeather: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         addSubview(mainStackView)
         addSubview(cityTempWeatherStackView)
         addSubview(minAndMaxStackView)
@@ -103,6 +102,9 @@ class DetailViewMainWeather: UIView {
     func configure(model: CurrentWeatherModel) {
         cityLabel.text = model.name
         temperatureLabel.text = "\(model.main.temp)°"
+        weatherLabel.text = model.weather.first?.description.capitalized
+        maxTempLabel.text = "H:\(model.main.temp_max)°"
+        minTempLabel.text = "M:\(model.main.temp_min)°"
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
