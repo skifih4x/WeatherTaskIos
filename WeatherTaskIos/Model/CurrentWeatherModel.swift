@@ -10,6 +10,7 @@ struct CurrentWeatherModel: Codable, Hashable {
     let name: String
     let weather: [CurrentWeather]
     let main: MainWeather
+    let sys: SunRiseSet
 }
 
 struct CurrentWeather: Codable, Hashable {
@@ -19,4 +20,9 @@ struct CurrentWeather: Codable, Hashable {
 
 struct MainWeather: Codable, Hashable {
     let temp: Double
+}
+
+struct SunRiseSet: Codable, Hashable {
+    let sunrise: Int
+    let sunset: Int
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailWeatherViewController: UIViewController {
+class DetailWeatherViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var modelVC: CurrentWeatherModel?
     var forecastModel: ForecastWeatherModel?
@@ -18,28 +18,37 @@ class DetailWeatherViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+
+//    lazy private var infoViewWeather: InfoWeatherView = {
+//        let view = InfoWeatherView()
+//        view.contentMode = .scaleToFill
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        return view
+//    }()
     var collectionView: UICollectionView!
+
+    private lazy var mainTableView: UITableView = {
+        let tableView = UITableView(frame: .init(x: 0, y: 300, width: view.frame.width, height: 390), style: .grouped)
+        tableView.register(SunRiseSetCell.self, forCellReuseIdentifier: SunRiseSetCell.identifier)
+        tableView.register(HumidWindCell.self, forCellReuseIdentifier: HumidWindCell.identifier)
+        tableView.register(FeelTempPressurCell.self, forCellReuseIdentifier: FeelTempPressurCell.identifier)
+        tableView.allowsSelectionDuringEditing = false
+        tableView.backgroundColor = .none
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView = UICollectionView(frame: .init(x: 0, y: 300, width: view.frame.width, height: 390), collectionViewLayout: createCompositionalLayout())
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .none
-        collectionView.register(HoursWeatherCell.self, forCellWithReuseIdentifier: HoursWeatherCell.reuseId)
-        collectionView.register(WeekWeatherCell.self, forCellWithReuseIdentifier: WeekWeatherCell.reuseId)
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        setCollectionView()
+        setLayout()
+        setNavigationController()
+
         guard let modelCurrent = modelVC else { return }
         detailViewMain.configure(model: modelCurrent)
-        view.layer.backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1).cgColor
-        view.addSubview(detailViewMain)
-        view.addSubview(collectionView)
-
-        NSLayoutConstraint.activate([
-            detailViewMain.topAnchor.constraint(equalTo: view.topAnchor, constant: 195),
-            detailViewMain.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            detailViewMain.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-        ])
 
         NetworkWeather.shared.fetchForecastWeather(cityID: modelCurrent.id) { result in
             switch result {
@@ -50,8 +59,32 @@ class DetailWeatherViewController: UIViewController {
                 print(failure)
             }
         }
-        setNavigationController()
+
     }
+
+    private func setLayout() {
+        view.layer.backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1).cgColor
+        view.addSubview(detailViewMain)
+        view.addSubview(collectionView)
+        view.addSubview(mainTableView)
+
+        NSLayoutConstraint.activate([
+            detailViewMain.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            detailViewMain.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            detailViewMain.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        ])
+    }
+
+    private func setCollectionView() {
+        collectionView = UICollectionView(frame: .init(x: 0, y: 300, width: view.frame.width, height: 390), collectionViewLayout: createCompositionalLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = .none
+        collectionView.register(HoursWeatherCell.self, forCellWithReuseIdentifier: HoursWeatherCell.reuseId)
+        collectionView.register(WeekWeatherCell.self, forCellWithReuseIdentifier: WeekWeatherCell.reuseId)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+
 
     private func setNavigationController() {
         let navBarAppearance = UINavigationBarAppearance()
@@ -59,12 +92,11 @@ class DetailWeatherViewController: UIViewController {
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1)
-        navBarAppearance.shadowColor = .clear
+        navBarAppearance.shadowColor = .red
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationItem.largeTitleDisplayMode = .automatic
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -84,6 +116,30 @@ class DetailWeatherViewController: UIViewController {
         navigationController?.popViewController(animated:true)
     }
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        3
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        switch indexPath.row {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SunRiseSetCell.identifier, for: indexPath) as? SunRiseSetCell else { return UITableViewCell() }
+            return cell
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: HumidWindCell.identifier, for: indexPath) as? HumidWindCell else { return UITableViewCell() }
+            return cell
+        default:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: FeelTempPressurCell.identifier, for: indexPath) as? FeelTempPressurCell else { return UITableViewCell() }
+            return cell
+
+        }
+
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        80
+    }
 
     // MARK: - Setup Layout
 
@@ -147,8 +203,10 @@ extension DetailWeatherViewController: UICollectionViewDelegate, UICollectionVie
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return 13
-        default: return 7
+        case 0:
+            return 13
+        default:
+            return 7
         }
     }
 
@@ -170,28 +228,6 @@ extension DetailWeatherViewController: UICollectionViewDelegate, UICollectionVie
             cell.configure(with: items)
             return cell
         }
-    }
-}
-
-extension UIView {
-
-    enum ViewSide {
-        case Left, Right, Top, Bottom
-    }
-
-    func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
-
-        let border = CALayer()
-        border.backgroundColor = color
-
-        switch side {
-        case .Left: border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height); break
-        case .Right: border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height); break
-        case .Top: border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness); break
-        case .Bottom: border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness); break
-        }
-
-        layer.addSublayer(border)
     }
 }
 
