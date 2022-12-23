@@ -24,7 +24,7 @@ final class DetailWeatherViewController: UIViewController {
     
     private lazy var tempCloudyLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(modelVC?.main.temp ?? 0) | \(modelVC?.weather.first?.description ?? "")"
+        label.text = "\(modelVC?.main.temp.formatZero() ?? "")° | \(modelVC?.weather.first?.description ?? "")"
         label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .white
         label.textAlignment = .center
@@ -106,7 +106,9 @@ final class DetailWeatherViewController: UIViewController {
     }
     private func setLayer() {
         view.layer.backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1).cgColor
+
         view.addSubview(scrollView)
+
         scrollView.addSubview(cityLabel)
         scrollView.addSubview(tempCloudyLabel)
         scrollView.addSubview(detailViewMain)
@@ -155,11 +157,10 @@ final class DetailWeatherViewController: UIViewController {
         let barButton = UIBarButtonItem(customView: button)
         navigationItem.leftBarButtonItem = barButton
     }
+
     @objc func callMethod(sender: UIBarButtonItem) {
         navigationController?.popViewController(animated:true)
     }
-
-
 
     // MARK: - Setup Composition Layout
 

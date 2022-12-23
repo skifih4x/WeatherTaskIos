@@ -17,3 +17,14 @@ extension Double {
         return String(format: "%.1f", self)
     }
 }
+
+extension Int {
+
+    func formatZero() -> String {
+        return String(format: "%.0f", self)
+    }
+
+    func formatOne() -> String {
+        return String(format: "%.1f", self)
+    }
+}

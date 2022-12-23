@@ -24,12 +24,10 @@ final class MainViewController: UIViewController, UISearchBarDelegate {
         return tableView
     }()
 
-    //    let city = ["Warsaw","Bucharest","Martuni","Shah Alam","Karmie","Budapest","Munich","Netivot","Santa Cruz de la Sierra","Porto Alegre","Kfar Yona","Palermo","Bremen","Jermuk","Beit Shemesh","Florence","Utrecht","Buenos Aires","Guayaquil","Rosario","Soledad","Subang Jaya","Valencia","Pasir Gudang","Akhtala"]
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        let index = mainTableView.indexPathForSelectedRow
-        //        guard let indexPath = index else { return }
         view.addSubview(mainTableView)
         networkLayer()
     }
@@ -80,7 +78,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainWeatherCell.identifier, for: indexPath) as? MainWeatherCell else { return UITableViewCell() }
         guard let models = model else { return UITableViewCell() }
-        //        cell.configureCity(city: city[indexPath.row])
         cell.configure(model: models)
         return cell
     }

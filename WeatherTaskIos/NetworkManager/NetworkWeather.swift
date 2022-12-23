@@ -36,7 +36,6 @@ struct NetworkWeather {
                 print(String(describing: error))
             }
         }.resume()
-
     }
 
     func fetchForecastWeather(cityID: Int, completion: @escaping (Result<ForecastWeatherModel, NetworkError>) -> Void ) {

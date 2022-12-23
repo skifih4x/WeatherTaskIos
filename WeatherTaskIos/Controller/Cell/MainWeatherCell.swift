@@ -72,17 +72,12 @@ final class MainWeatherCell: UITableViewCell {
         ])
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     func configure(model: CurrentWeatherModel) {
         tempLabel.text = "\(model.main.temp)"
         countryLabel.text = model.name
         imageWeather.image = UIImage(named: model.weather.first?.icon ?? "")
     }
-
-    func configureCity(city: String) {
-        countryLabel.text = city
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
