@@ -72,13 +72,16 @@ class WeekWeatherCell: UICollectionViewCell {
     }
 
     func configure(with model: Lists) {
-        dayWeekLabel.text = "\(model.dt)"
-        iconImageView.image = UIImage(named: model.weather.first?.icon ?? "person.fill")
-//        rainLabel.text = "\((model.rain?.the3H ?? 0) * 100)%"
-        rainLabel.text = "\(String(format: "%.0f", (model.rain?.the3H ?? 0) * 100))%"
+        let changeRain = "\((Int(model.rain?.the3H?.formatZero() ?? "") ?? 0) * 100)%"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        let hourString = formatter.string(from: model.dt).capitalized
 
-        maxTempLabel.text = String(format: "%.1f", model.main.temp_max)
-        minTempLabel.text = String(format: "%.1f", model.main.temp_min)
+        dayWeekLabel.text = "\(hourString)"
+        iconImageView.image = UIImage(named: model.weather.first?.icon ?? "person.fill")
+        rainLabel.text = changeRain
+        maxTempLabel.text = model.main.temp_max.formatOne()
+        minTempLabel.text = model.main.temp_min.formatOne()
     }
 
     required init?(coder: NSCoder) {

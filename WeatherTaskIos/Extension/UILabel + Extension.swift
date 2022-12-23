@@ -23,6 +23,14 @@ extension UILabel {
         textColor = .white
     }
 
+    convenience init(_ text: String,_ font: UIFont,_ textAlignment: NSTextAlignment) {
+        self.init()
+        self.text = text
+        self.font = font
+        self.textAlignment = textAlignment
+        textColor = .white
+    }
+
     convenience init(textMaxSize: String) {
         self.init()
         self.text = text

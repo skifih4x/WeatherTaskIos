@@ -17,16 +17,18 @@ struct NetworkWeather {
 
     static let shared = NetworkWeather()
 
-    func fetchCurrentWeather(urlString: String, copletion: @escaping (Result<CurrentWeatherModel, NetworkError>) -> Void ) {
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { data, _, error in
+    func fetchCurrentWeather(copletion: @escaping (Result<CurrentWeatherModel, NetworkError>) -> Void ) {
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=minsk&units=metric&appid=22dc65ed9ccb1fee97feb45f8a252e82") else { return }
+        URLSession.shared.dataTask(with: url) {  data, _, error in
             guard let data = data else {
                 copletion(.failure(.invalidUrl))
                 print(error?.localizedDescription ?? "Error")
                 return
             }
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .secondsSince1970
             do {
-                let result = try JSONDecoder().decode(CurrentWeatherModel.self, from: data)
+                let result = try decoder.decode(CurrentWeatherModel.self, from: data)
                 DispatchQueue.main.async {
                     copletion(.success(result))
                 }

@@ -23,7 +23,6 @@ class MainWeatherCell: UITableViewCell {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 25)
-        label.backgroundColor = .black
         label.textColor = .white
         return label
     }()
@@ -32,7 +31,6 @@ class MainWeatherCell: UITableViewCell {
         let imageView = UIImageView()
         let image = UIImage(systemName: "heart.fill")
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .black
         imageView.image = image
         imageView.contentMode = .center
         return imageView
@@ -42,7 +40,6 @@ class MainWeatherCell: UITableViewCell {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 25)
-        label.backgroundColor = .black
         label.textAlignment = .right
         label.textColor = .white
         return label
@@ -72,9 +69,7 @@ class MainWeatherCell: UITableViewCell {
 
 //            imageWeather.widthAnchor.constraint(equalToConstant: 42),
 //            imageWeather.heightAnchor.constraint(equalToConstant: 42)
-
         ])
-
     }
 
     required init?(coder: NSCoder) {
@@ -86,27 +81,8 @@ class MainWeatherCell: UITableViewCell {
         countryLabel.text = model.name
         imageWeather.image = UIImage(named: model.weather.first?.icon ?? "")
     }
-}
 
-import SwiftUI
-
-struct PeopleVCProvider1: PreviewProvider {
-    static var previews: some View {
-        Container().edgesIgnoringSafeArea(.all)
-            .previewDevice("iPhone 13 Pro Max")
-    }
-
-    struct Container: UIViewControllerRepresentable {
-
-        let tabBarVC = MainViewController()
-
-        func makeUIViewController(context: Context) -> some UIViewController {
-            tabBarVC
-        }
-
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-
-        }
+    func configureCity(city: String) {
+        countryLabel.text = city
     }
 }
-

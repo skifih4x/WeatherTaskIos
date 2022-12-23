@@ -44,7 +44,6 @@ class HoursWeatherCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        backgroundColor = UIColor(white: 1, alpha: 1)
         setupConstraints()
 
         self.layer.cornerRadius = 4
@@ -55,7 +54,11 @@ class HoursWeatherCell: UICollectionViewCell {
     }
 
     func configure(with model: Lists) {
-        tempLabel.text = "\(model.main.temp)"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hha"
+        let hourString = formatter.string(from: model.dt)
+        dateLabel.text = hourString
+        tempLabel.text = model.main.temp.formatZero()
         weatherIcon.image = UIImage(named: model.weather.first?.icon ?? "")
     }
 
@@ -82,8 +85,6 @@ extension HoursWeatherCell {
             weatherIcon.heightAnchor.constraint(equalToConstant: 70),
             weatherIcon.widthAnchor.constraint(equalToConstant: 70)
         ])
-
-
     }
 }
 

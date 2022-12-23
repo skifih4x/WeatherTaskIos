@@ -7,9 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-
-    let city = ["Warsaw","Bucharest","Martuni","Shah Alam","Karmie","Budapest","Munich","Netivot","Santa Cruz de la Sierra","Porto Alegre","Kfar Yona","Palermo","Bremen","Jermuk","Beit Shemesh","Florence","Utrecht","Buenos Aires","Guayaquil","Rosario","Soledad","Subang Jaya","Valencia","Pasir Gudang","Akhtala"]
+class MainViewController: UIViewController, UISearchBarDelegate {
 
     private var model: CurrentWeatherModel?
 
@@ -19,31 +17,34 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderView.identifier)
         tableView.allowsSelectionDuringEditing = false
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .black
         tableView.delegate = self
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
 
+    //    let city = ["Warsaw","Bucharest","Martuni","Shah Alam","Karmie","Budapest","Munich","Netivot","Santa Cruz de la Sierra","Porto Alegre","Kfar Yona","Palermo","Bremen","Jermuk","Beit Shemesh","Florence","Utrecht","Buenos Aires","Guayaquil","Rosario","Soledad","Subang Jaya","Valencia","Pasir Gudang","Akhtala"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        //        let index = mainTableView.indexPathForSelectedRow
+        //        guard let indexPath = index else { return }
         view.addSubview(mainTableView)
-        mainTableView.backgroundColor = .black
-        title = "Wather"
-        NetworkWeather.shared.fetchCurrentWeather(urlString: "https://api.openweathermap.org/data/2.5/weather?q=minsk&units=metric&appid=22dc65ed9ccb1fee97feb45f8a252e82") { result in
-            switch result {
-            case .success(let success):
-                self.model = success
-                self.mainTableView.reloadData()
-            case .failure(let failure):
-                print(failure.localizedDescription)
-
-            }
-        }
+        networkLayer()
     }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setNavigationController()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        mainTableView.frame = view.bounds
+    }
+
+    private func setNavigationController() {
+        title = "Weather"
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -55,10 +56,22 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.navigationItem.largeTitleDisplayMode = .automatic
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        mainTableView.frame = view.bounds
+    private func networkLayer() {
+        NetworkWeather.shared.fetchCurrentWeather() { [weak self] result in
+            switch result {
+            case .success(let success):
+                self?.model = success
+                self?.mainTableView.reloadData()
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
     }
+}
+
+// MARK: - TableView Delegate and DataSourse
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
@@ -67,6 +80,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainWeatherCell.identifier, for: indexPath) as? MainWeatherCell else { return UITableViewCell() }
         guard let models = model else { return UITableViewCell() }
+        //        cell.configureCity(city: city[indexPath.row])
         cell.configure(model: models)
         return cell
     }
@@ -82,31 +96,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-
         let vc = DetailWeatherViewController()
         vc.modelVC = model
         navigationController?.pushViewController(vc, animated: true)
-    }
-}
-
-import SwiftUI
-
-struct PeopleVCProvider: PreviewProvider {
-    static var previews: some View {
-        Container().edgesIgnoringSafeArea(.all)
-            .previewDevice("iPhone 13 Pro Max")
-    }
-
-    struct Container: UIViewControllerRepresentable {
-
-        let tabBarVC = MainViewController()
-
-        func makeUIViewController(context: Context) -> some UIViewController {
-            tabBarVC
-        }
-
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-
-        }
     }
 }

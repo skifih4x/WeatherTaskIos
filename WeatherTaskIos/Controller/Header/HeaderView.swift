@@ -46,25 +46,3 @@ class HeaderView: UITableViewHeaderFooterView, UISearchControllerDelegate, UISea
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-import SwiftUI
-
-struct PeopleVCProvider2: PreviewProvider {
-    static var previews: some View {
-        Container().edgesIgnoringSafeArea(.all)
-            .previewDevice("iPhone 13 Pro Max")
-    }
-
-    struct Container: UIViewControllerRepresentable {
-
-        let tabBarVC = MainViewController()
-
-        func makeUIViewController(context: Context) -> some UIViewController {
-            tabBarVC
-        }
-
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-
-        }
-    }
-}

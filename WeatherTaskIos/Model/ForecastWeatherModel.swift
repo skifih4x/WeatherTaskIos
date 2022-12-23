@@ -5,28 +5,31 @@
 //  Created by Артем Орлов on 20.12.2022.
 //
 
-struct ForecastWeatherModel: Codable {
+import Foundation
+
+struct ForecastWeatherModel: Decodable {
     let list: [Lists]
 }
 
-struct Lists: Codable {
-    let dt: Int
+struct Lists: Decodable {
+    let dt: Date
     let main: Main
     let weather: [Weather]
     let rain: Rain?
+    let dt_txt: String
 }
 
-struct Weather: Codable {
+struct Weather: Decodable {
     let icon: String
 }
 
-struct Main: Codable {
+struct Main: Decodable {
     let temp: Double
     let temp_max: Double
     let temp_min: Double
 }
 
-struct Rain: Codable {
+struct Rain: Decodable {
     let the3H: Double?
 
     enum CodingKeys: String, CodingKey {

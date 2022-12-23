@@ -9,83 +9,34 @@ import UIKit
 
 class DetailViewMainWeather: UIView {
 
-    lazy private var mainStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
+    lazy private var mainStackView = UIStackView(.vertical, .center, .equalSpacing, 10)
 
-    lazy private var cityTempWeatherStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
+    lazy private var cityTempWeatherStackView = UIStackView(.vertical)
 
-    lazy private var minAndMaxStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
+    lazy private var minAndMaxStackView = UIStackView(.horizontal, 10)
 
-    lazy private var cityLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 34)
-        label.text = "City"
-        label.textColor = .white
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    lazy private var cityLabel = UILabel("City", .systemFont(ofSize: 34), .center)
 
-    lazy private var temperatureLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 80)
-        label.text = "7°C"
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    lazy private var temperatureLabel = UILabel("7°C", .systemFont(ofSize: 80), .center)
 
-    lazy private var weatherLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.text = "Mostly Cloudy"
-        label.textAlignment = .center
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    lazy private var weatherLabel = UILabel("Mostly Cloudy", .systemFont(ofSize: 20), .center)
 
-    lazy private var maxTempLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.text = "H:8°C"
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    lazy private var maxTempLabel = UILabel("H:8°C", .systemFont(ofSize: 20), .center)
 
-    lazy private var minTempLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.text = "L:0°C"
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    lazy private var minTempLabel  = UILabel("L:0°C", .systemFont(ofSize: 20), .center)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setLayout()
+    }
+
+    private func setLayout() {
         addSubview(mainStackView)
         addSubview(cityTempWeatherStackView)
         addSubview(minAndMaxStackView)
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        cityTempWeatherStackView.translatesAutoresizingMaskIntoConstraints = false
+        minAndMaxStackView.translatesAutoresizingMaskIntoConstraints = false
 
         cityTempWeatherStackView.addArrangedSubview(cityLabel)
         cityTempWeatherStackView.addArrangedSubview(temperatureLabel)
@@ -101,11 +52,12 @@ class DetailViewMainWeather: UIView {
 
     func configure(model: CurrentWeatherModel) {
         cityLabel.text = model.name
-        temperatureLabel.text = "\(model.main.temp)°"
+        temperatureLabel.text = "\(model.main.temp.formatZero())°"
         weatherLabel.text = model.weather.first?.description.capitalized
-        maxTempLabel.text = "H:\(model.main.temp_max)°"
-        minTempLabel.text = "M:\(model.main.temp_min)°"
+        maxTempLabel.text = "H:\(model.main.temp_max.formatZero())°"
+        minTempLabel.text = "L:\(model.main.temp_min.formatZero())°"
     }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

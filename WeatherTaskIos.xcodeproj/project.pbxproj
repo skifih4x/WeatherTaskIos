@@ -24,6 +24,7 @@
 		00A94B2E294B6E12000A8169 /* NetworkWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A94B2D294B6E12000A8169 /* NetworkWeather.swift */; };
 		00D020292954F7A500E244A3 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D020282954F7A500E244A3 /* UILabel + Extension.swift */; };
 		00D0202B2954FFCF00E244A3 /* UIStackView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D0202A2954FFCF00E244A3 /* UIStackView + Extension.swift */; };
+		00D0202D2955F1EE00E244A3 /* Double + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D0202C2955F1EE00E244A3 /* Double + Extension.swift */; };
 		00F8A83B294C94E0007DAC74 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F8A83A294C94E0007DAC74 /* HeaderView.swift */; };
 		00F8A83F294DF0B1007DAC74 /* DetailWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F8A83E294DF0B1007DAC74 /* DetailWeatherViewController.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +49,7 @@
 		00A94B2D294B6E12000A8169 /* NetworkWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWeather.swift; sourceTree = "<group>"; };
 		00D020282954F7A500E244A3 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
 		00D0202A2954FFCF00E244A3 /* UIStackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extension.swift"; sourceTree = "<group>"; };
+		00D0202C2955F1EE00E244A3 /* Double + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double + Extension.swift"; sourceTree = "<group>"; };
 		00F8A83A294C94E0007DAC74 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		00F8A83E294DF0B1007DAC74 /* DetailWeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWeatherViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,12 +102,12 @@
 		00A94B0E2949FA83000A8169 /* WeatherTaskIos */ = {
 			isa = PBXGroup;
 			children = (
-				00D020272954F77000E244A3 /* Extension */,
 				00A94B2C294B6E04000A8169 /* NetworkManager */,
 				00A94B29294B32B3000A8169 /* Model */,
+				00F8A83C294DF092007DAC74 /* Controller */,
+				00D020272954F77000E244A3 /* Extension */,
 				00A94B24294A006C000A8169 /* Resurces */,
 				00A94B23294A0066000A8169 /* App */,
-				00F8A83C294DF092007DAC74 /* Controller */,
 			);
 			path = WeatherTaskIos;
 			sourceTree = "<group>";
@@ -159,6 +161,7 @@
 			children = (
 				00D020282954F7A500E244A3 /* UILabel + Extension.swift */,
 				00D0202A2954FFCF00E244A3 /* UIStackView + Extension.swift */,
+				00D0202C2955F1EE00E244A3 /* Double + Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -166,10 +169,10 @@
 		00F8A83C294DF092007DAC74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0058ADBB294F56210037E9D7 /* Header */,
-				00F8A83E294DF0B1007DAC74 /* DetailWeatherViewController.swift */,
 				00A94B25294A6260000A8169 /* MainViewController.swift */,
+				00F8A83E294DF0B1007DAC74 /* DetailWeatherViewController.swift */,
 				00F8A83D294DF09C007DAC74 /* Cell */,
+				0058ADBB294F56210037E9D7 /* Header */,
 				00B9E65E29536BDD00823D09 /* View */,
 			);
 			path = Controller;
@@ -180,8 +183,8 @@
 			children = (
 				0049A4D929547AE0006D40B3 /* InfoWeatherCell */,
 				00A94B27294B31F8000A8169 /* MainWeatherCell.swift */,
-				001193942952573600F9316C /* WeekWeatherCell.swift */,
 				001193962952579500F9316C /* HoursWeatherCell.swift */,
+				001193942952573600F9316C /* WeekWeatherCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				0049A4DD29547B0C006D40B3 /* HumidWindCell.swift in Sources */,
 				00D0202B2954FFCF00E244A3 /* UIStackView + Extension.swift in Sources */,
 				00A94B28294B31F8000A8169 /* MainWeatherCell.swift in Sources */,
+				00D0202D2955F1EE00E244A3 /* Double + Extension.swift in Sources */,
 				00F8A83F294DF0B1007DAC74 /* DetailWeatherViewController.swift in Sources */,
 				00A94B2B294B32D0000A8169 /* CurrentWeatherModel.swift in Sources */,
 				0049A4DF29547B18006D40B3 /* FeelTempPressurCell.swift in Sources */,

@@ -4,8 +4,9 @@
 //
 //  Created by Артем Орлов on 15.12.2022.
 //
+import Foundation
 
-struct CurrentWeatherModel: Codable {
+struct CurrentWeatherModel: Decodable {
     let id: Int
     let name: String
     let weather: [CurrentWeather]
@@ -14,13 +15,13 @@ struct CurrentWeatherModel: Codable {
     let sys: SunRiseSet
 }
 
-struct CurrentWeather: Codable {
+struct CurrentWeather: Decodable {
     let id: Int
     let icon: String
     let description: String
 }
 
-struct MainWeather: Codable {
+struct MainWeather: Decodable {
     let temp: Double
     let temp_max: Double
     let temp_min: Double
@@ -29,11 +30,11 @@ struct MainWeather: Codable {
     let pressure: Int
 }
 
-struct Wind: Codable {
+struct Wind: Decodable {
     let speed: Double
 }
 
-struct SunRiseSet: Codable {
-    let sunrise: Int
-    let sunset: Int
+struct SunRiseSet: Decodable {
+    let sunrise: Date
+    let sunset: Date
 }

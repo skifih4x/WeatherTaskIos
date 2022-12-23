@@ -57,10 +57,15 @@ class SunRiseSetCell: UITableViewCell {
     }
 
     func configure(model: CurrentWeatherModel) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm a"
+        let sunrise = formatter.string(from: model.sys.sunrise)
+        let sunset = formatter.string(from: model.sys.sunset)
+        
         sunriseTextLabel.text = "SUNRASE"
-        sunriseLabel.text = "\(model.sys.sunrise)"
+        sunriseLabel.text = "\(sunrise)"
         sunsetTextLabel.text = "SUNSET"
-        sunsetLabel.text = "\(model.sys.sunset)"
+        sunsetLabel.text = "\(sunset)"
     }
 
     required init?(coder: NSCoder) {
