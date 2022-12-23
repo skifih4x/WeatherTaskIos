@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HeaderView: UITableViewHeaderFooterView, UISearchControllerDelegate, UISearchBarDelegate {
+final class HeaderView: UITableViewHeaderFooterView, UISearchControllerDelegate, UISearchBarDelegate {
 
     static let identifier = "HeaderView"
 

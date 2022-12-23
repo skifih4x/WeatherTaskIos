@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HoursWeatherCell: UICollectionViewCell {
+final class HoursWeatherCell: UICollectionViewCell {
 
     static var reuseId: String = "HoursWeatherCell"
 
@@ -75,7 +75,7 @@ extension HoursWeatherCell {
         stackView.addArrangedSubview(weatherIcon)
         stackView.addArrangedSubview(tempLabel)
 
-        
+
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),

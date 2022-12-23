@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeekWeatherCell: UICollectionViewCell {
+final class WeekWeatherCell: UICollectionViewCell {
 
     static var reuseId: String = "WeekWeatherCell"
 

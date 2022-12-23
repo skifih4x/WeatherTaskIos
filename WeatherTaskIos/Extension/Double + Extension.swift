@@ -8,6 +8,7 @@
 import Foundation
 
 extension Double {
+    
     func formatZero() -> String {
         return String(format: "%.0f", self)
     }

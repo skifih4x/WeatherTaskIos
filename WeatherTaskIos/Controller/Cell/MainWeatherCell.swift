@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainWeatherCell: UITableViewCell {
+final class MainWeatherCell: UITableViewCell {
 
     static let identifier = "MainWeatherCell"
 

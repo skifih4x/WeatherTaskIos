@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HumidWindCell: UITableViewCell {
+final class HumidWindCell: UITableViewCell {
 
     static let identifier = "HumidWindCell"
 

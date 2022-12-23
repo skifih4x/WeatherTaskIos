@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailViewMainWeather: UIView {
+final class DetailViewMainWeather: UIView {
 
     lazy private var mainStackView = UIStackView(.vertical, .center, .equalSpacing, 10)
 

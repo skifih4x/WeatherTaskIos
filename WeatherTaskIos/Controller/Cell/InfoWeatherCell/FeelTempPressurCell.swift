@@ -8,7 +8,7 @@
 import UIKit
 
 
-class FeelTempPressurCell: UITableViewCell {
+final class FeelTempPressurCell: UITableViewCell {
 
     static let identifier = "FeelTempPressurCell"
 

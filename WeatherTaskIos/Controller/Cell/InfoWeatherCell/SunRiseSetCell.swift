@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SunRiseSetCell: UITableViewCell {
+final class SunRiseSetCell: UITableViewCell {
 
     static let identifier = "SunRiseSetCell"
 

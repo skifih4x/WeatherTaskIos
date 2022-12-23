@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UISearchBarDelegate {
+final class MainViewController: UIViewController, UISearchBarDelegate {
 
     private var model: CurrentWeatherModel?
 
