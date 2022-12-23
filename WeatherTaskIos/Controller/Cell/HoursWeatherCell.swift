@@ -75,12 +75,15 @@ extension HoursWeatherCell {
         stackView.addArrangedSubview(weatherIcon)
         stackView.addArrangedSubview(tempLabel)
 
-
+        
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+            dateLabel.heightAnchor.constraint(equalToConstant: 12),
+            tempLabel.heightAnchor.constraint(equalToConstant: 12),
 
             weatherIcon.heightAnchor.constraint(equalToConstant: 70),
             weatherIcon.widthAnchor.constraint(equalToConstant: 70)

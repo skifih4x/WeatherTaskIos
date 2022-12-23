@@ -16,9 +16,9 @@ class FeelTempPressurCell: UITableViewCell {
 
     lazy var feelsLikeStackView = UIStackView(.vertical, .center, .fillProportionally)
 
-    lazy var feelsLikeTextLabel = UILabel("FEEL LIKE", .boldSystemFont(ofSize: 13))
+    lazy var feelsLikeTextLabel = UILabel("FEEL LIKE", .systemFont(ofSize: 13))
 
-    lazy var feelsLikeLabel = UILabel("0.00", .systemFont(ofSize: 28))
+    lazy var feelsLikeLabel = UILabel("0.00", .boldSystemFont(ofSize: 28))
 
     lazy var pressureStackView = UIStackView(.vertical, .center, .fillProportionally)
 

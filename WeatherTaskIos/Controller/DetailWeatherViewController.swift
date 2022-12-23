@@ -10,12 +10,12 @@ import UIKit
 class DetailWeatherViewController: UIViewController {
 
     var modelVC: CurrentWeatherModel?
-    var forecastModel: ForecastWeatherModel?
+    private var forecastModel: ForecastWeatherModel?
 
     private lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.text = modelVC?.name
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 27)
         label.textColor = .white
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +25,7 @@ class DetailWeatherViewController: UIViewController {
     private lazy var tempCloudyLabel: UILabel = {
         let label = UILabel()
         label.text = "\(modelVC?.main.temp ?? 0) | \(modelVC?.weather.first?.description ?? "")"
-        label.font = .boldSystemFont(ofSize: 17)
+        label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .white
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -135,7 +135,7 @@ class DetailWeatherViewController: UIViewController {
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.backgroundColor = UIColor(red: 0.246, green: 0.516, blue: 0.867, alpha: 1)
-        navBarAppearance.shadowColor = .red
+        navBarAppearance.shadowColor = .none
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
@@ -217,7 +217,7 @@ class DetailWeatherViewController: UIViewController {
 
 extension DetailWeatherViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let sizeY = scrollView.contentOffset.y >= -40
+        let sizeY = scrollView.contentOffset.y >= -10
         if sizeY {
             detailViewMain.isHidden = true
             cityLabel.isHidden = false
