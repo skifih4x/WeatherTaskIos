@@ -51,7 +51,6 @@ final class MainViewController: UIViewController, UISearchBarDelegate {
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationItem.largeTitleDisplayMode = .automatic
     }
 
     private func networkLayer() {
